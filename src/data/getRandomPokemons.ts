@@ -3,7 +3,7 @@ import { POKEAPI_BASE_URL } from "./consts";
 import { Pokemon } from "./types";
 
 export const getRandomPokemons = async (count = 3) => {
-  const maxPokemon = 1302; // Total Pokémon in the PokéAPI at moment of this project
+  const maxPokemon = 1025; // Total Pokémon in the PokéAPI at moment of this project
 
   const randomIds = Array.from(
     { length: count },

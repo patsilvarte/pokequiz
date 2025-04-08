@@ -12,21 +12,23 @@ import NextLevel from "./levelStatus/NextLevel";
 import NotSortedArea from "./NotSortedArea";
 import TypeBin from "./TypeBin";
 
-const baseLocations: LocationsSet = {
-  empty: [],
-};
+const getBaseLocations = () =>
+  ({
+    empty: [],
+  } as LocationsSet);
 
 const LabArea = () => {
   // state for current location of each draggable
-  const [draggableLocation, setDraggableLocation] =
-    useState<LocationsSet>(baseLocations);
+  const [draggableLocation, setDraggableLocation] = useState<LocationsSet>(
+    getBaseLocations()
+  );
 
   const { pokemonList, typeBins, next, restart, levelsCompleted } =
     useLevelContext();
 
   // add type bins for selected pokemons to location list
   useEffect(() => {
-    const locations = { ...baseLocations };
+    const locations = getBaseLocations();
     pokemonList.forEach((pokemon) => {
       locations.empty.push(pokemon.id);
     });

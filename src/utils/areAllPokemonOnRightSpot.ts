@@ -7,13 +7,11 @@ export const areAllPokemonOnRightSpot = (
   if (locations.empty.length !== 0) {
     return false;
   }
-  pokemons.every((pokemon) => {
+  return pokemons.every((pokemon) => {
     const pokemonTypes = pokemon.types;
     const isOnRightBin = pokemonTypes.some((type) =>
       locations[type]?.includes(pokemon.id)
     );
     return isOnRightBin;
   });
-
-  return true;
 };

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Garbage } from "../types";
+import { Garbage } from "../data/types";
 import Draggable from "./dragAndDrop/Draggable";
 
 interface NotSortedGarbageProps {

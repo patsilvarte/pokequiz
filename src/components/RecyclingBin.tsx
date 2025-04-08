@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Garbage, RecyclingBinName } from "../types";
+import { Garbage, RecyclingBinName } from "../data/types";
 import Draggable from "./dragAndDrop/Draggable";
 import Droppable from "./dragAndDrop/Droppable";
 

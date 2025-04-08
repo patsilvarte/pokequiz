@@ -1,5 +1,5 @@
 import table from "../../assets/table.jpg";
-import { Garbage, LocationsSet } from "../../types";
+import { Garbage, LocationsSet } from "../../data/types";
 
 import { FC } from "react";
 import { Background } from "./Background";

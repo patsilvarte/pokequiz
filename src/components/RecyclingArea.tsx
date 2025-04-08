@@ -1,11 +1,12 @@
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { useEffect, useMemo, useState } from "react";
-import { BinIds, LocationsSet } from "../types";
-import { areAllItemsOnRightSpot, getItemsPerSection } from "../utils";
+import { BinIds, LocationsSet } from "../data/types";
 import { Table } from "./general/Table";
 import RecyclingBin from "./RecyclingBin";
 
-import useLevels from "../useLevels";
+import useLevels from "../hooks/useLevels";
+import { areAllItemsOnRightSpot } from "../utils/areAllItemsOnRightSpot";
+import { getItemsPerSection } from "../utils/getItemsPerSection";
 import ChallangeCompleted from "./levelStatus/ChallangeCompleted";
 import NextLevel from "./levelStatus/NextLevel";
 import NotSortedGarbage from "./NotSortedGarbage";

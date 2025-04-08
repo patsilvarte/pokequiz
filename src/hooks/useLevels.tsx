@@ -1,6 +1,6 @@
-import { level1, level2, level3, level4, level5 } from "./data/levels";
-import { Level } from "./types";
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
+import { level1, level2, level3, level4, level5 } from "../data/levels";
+import { Level } from "../data/types";
 
 const useLevels = () => {
   const [currentLevel, setCurrentLevel] = useState<number>(0);

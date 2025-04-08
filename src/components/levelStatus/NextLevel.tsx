@@ -10,9 +10,7 @@ const NextLevel: FC<NextLevelProps> = ({ next }) => {
   return (
     <div>
       <Confetti width={window.innerWidth} height={window.innerHeight} />
-      <Button onClick={next} style={{ color: "white" }}>
-        Next Level
-      </Button>
+      <Button onClick={next}>Next Level</Button>
     </div>
   );
 };

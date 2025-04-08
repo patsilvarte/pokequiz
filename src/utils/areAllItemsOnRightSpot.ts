@@ -1,11 +1,4 @@
-import { Garbage, LocationsSet } from "./types";
-
-export const getItemsPerSection = (
-  allItems: Garbage[],
-  itemsSection: string[]
-) => {
-  return allItems.filter((item) => itemsSection.includes(item.id));
-};
+import { Garbage, LocationsSet } from "../data/types";
 
 export const areAllItemsOnRightSpot = (
   locationIds: LocationsSet,

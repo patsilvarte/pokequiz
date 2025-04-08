@@ -1,17 +1,18 @@
 import "./App.css";
 import Footer from "./components/general/Footer";
 import { Wall } from "./components/general/Wall";
-import RecyclingArea from "./components/RecyclingArea";
+import LabArea from "./components/LabArea";
+import { LevelProvider } from "./context/LevelProvider";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <Wall>
-          <>
-            <RecyclingArea />
+          <LevelProvider>
+            <LabArea />
             <Footer />
-          </>
+          </LevelProvider>
         </Wall>
       </header>
     </div>

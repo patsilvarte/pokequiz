@@ -1,8 +1,8 @@
-import { Garbage } from "../data/types";
+import { Pokemon } from "../data/types";
 
 export const getItemsPerSection = (
-  allItems: Garbage[],
-  itemsSection: string[]
+  allItems: Pokemon[],
+  itemsSection: number[]
 ) => {
-  return allItems.filter((item) => itemsSection.includes(item.id));
+  return allItems.filter((item) => itemsSection?.includes(item.id));
 };

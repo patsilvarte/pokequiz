@@ -6,7 +6,7 @@ import itemWrong from "../../assets/item_wrong.png";
 
 interface DraggableProps {
   children?: ReactNode;
-  id: string;
+  id: string | number;
   isPlacedRight?: boolean;
   insideBin?: boolean;
   img: string;

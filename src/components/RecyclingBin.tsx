@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Garbage, RecyclingBinName } from "../types";
-import Draggable from "./Draggable";
-import Droppable from "./Droppable";
+import Draggable from "./dragAndDrop/Draggable";
+import Droppable from "./dragAndDrop/Droppable";
 
 interface RecyclingBinProps {
   id: string;

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import Confetti from "react-confetti";
-import Button from "./Button";
+import Button from "../general/Button";
 
 interface NextLevelProps {
   next: () => void;
@@ -8,10 +8,12 @@ interface NextLevelProps {
 
 const NextLevel: FC<NextLevelProps> = ({ next }) => {
   return (
-    <>
+    <div>
       <Confetti width={window.innerWidth} height={window.innerHeight} />
-      <Button onClick={next}>Próximo nível</Button>
-    </>
+      <Button onClick={next} style={{ color: "white" }}>
+        Next Level
+      </Button>
+    </div>
   );
 };
 

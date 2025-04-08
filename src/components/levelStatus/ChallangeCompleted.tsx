@@ -1,7 +1,7 @@
 import { FC } from "react";
 import Confetti from "react-confetti";
-import { getStarConfettis } from "../confettisEffects";
-import Button from "./Button";
+import { getStarConfettis } from "../../confettisEffects";
+import Button from "../general/Button";
 interface ChallangeCompletedProps {
   restart: () => void;
 }
@@ -14,9 +14,9 @@ const ChallangeCompleted: FC<ChallangeCompletedProps> = ({ restart }) => {
         height={window.innerHeight}
         drawShape={getStarConfettis}
       />
-      <p>Parabéns!</p>
-      <p>Conseguiste colocar todo o lixo no seu sítio.</p>
-      <Button onClick={restart}>Recomeçar</Button>
+      <p>Great job!</p>
+      <p>All your pokemons were well classified.</p>
+      <Button onClick={restart}>Restart</Button>
     </>
   );
 };

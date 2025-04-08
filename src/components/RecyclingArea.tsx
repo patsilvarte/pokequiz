@@ -1,16 +1,14 @@
-import { DragEndEvent, DndContext } from "@dnd-kit/core";
-import { useEffect, useState, useMemo } from "react";
-import { LocationsSet, BinIds } from "../types";
-import { areAllItemsOnRightSpot } from "../utils";
-import Street from "./Street";
+import { DndContext, DragEndEvent } from "@dnd-kit/core";
+import { useEffect, useMemo, useState } from "react";
+import { BinIds, LocationsSet } from "../types";
+import { areAllItemsOnRightSpot, getItemsPerSection } from "../utils";
+import { Table } from "./general/Table";
 import RecyclingBin from "./RecyclingBin";
-import { getItemsPerSection } from "../utils";
 
-import NotSortedGarbage from "./NotSortedGarbage";
-import ChallangeCompleted from "./ChallangeCompleted";
-import Sky from "./Sky";
 import useLevels from "../useLevels";
-import NextLevel from "./NextLevel";
+import ChallangeCompleted from "./levelStatus/ChallangeCompleted";
+import NextLevel from "./levelStatus/NextLevel";
+import NotSortedGarbage from "./NotSortedGarbage";
 
 const initLocation: LocationsSet = {
   empty: [],
@@ -70,22 +68,20 @@ const RecyclingArea = () => {
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
-      <div className="flex w-screen h-screen flex-col">
-        <Sky>
-          <>
-            {levelCompleted && !hasNext && (
-              <ChallangeCompleted restart={restart} />
-            )}
-            {levelCompleted && hasNext && <NextLevel next={next} />}
-            {!levelCompleted && (
-              <NotSortedGarbage
-                items={getItemsPerSection(garbage, draggableLocation.empty)}
-                level={level}
-              />
-            )}
-          </>
-        </Sky>
-        <Street garbage={garbage} draggableLocation={draggableLocation}>
+      <div className="flex grow flex-col">
+        <div className="flex justify-center flex-col grow">
+          {levelCompleted && !hasNext && (
+            <ChallangeCompleted restart={restart} />
+          )}
+          {levelCompleted && hasNext && <NextLevel next={next} />}
+          {!levelCompleted && (
+            <NotSortedGarbage
+              items={getItemsPerSection(garbage, draggableLocation.empty)}
+              level={level}
+            />
+          )}
+        </div>
+        <Table garbage={garbage} draggableLocation={draggableLocation}>
           <div className="w-4/5 flex justify-around gap-4 items-center">
             {bins.map(({ id, name, img }) => (
               <RecyclingBin
@@ -96,7 +92,7 @@ const RecyclingArea = () => {
               />
             ))}
           </div>
-        </Street>
+        </Table>
       </div>
     </DndContext>
   );

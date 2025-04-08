@@ -1,8 +1,8 @@
-import React, { FC, ReactNode } from "react";
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
-import itemRight from "../assets/item_right.png";
-import itemWrong from "../assets/item_wrong.png";
+import { FC, ReactNode } from "react";
+import itemRight from "../../assets/item_right.png";
+import itemWrong from "../../assets/item_wrong.png";
 
 interface DraggableProps {
   children?: ReactNode;

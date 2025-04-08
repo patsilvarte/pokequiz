@@ -1,7 +1,6 @@
 import {
   createContext,
   PropsWithChildren,
-  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -30,6 +29,7 @@ export const LevelProvider = ({ children }: PropsWithChildren) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log("levels comleted :", levelsCompleted);
     const fetchPokemons = async () => {
       try {
         const data = await getRandomPokemons();
@@ -51,10 +51,8 @@ export const LevelProvider = ({ children }: PropsWithChildren) => {
   );
 
   const restart = () => setLevelsCompleted(0);
-  const next = useCallback(
-    () => setLevelsCompleted(levelsCompleted + 1),
-    [levelsCompleted]
-  );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const next = () => setLevelsCompleted((prev) => prev + 1);
 
   const value: LevelContextType = useMemo(() => {
     return {

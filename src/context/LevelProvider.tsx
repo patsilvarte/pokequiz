@@ -61,6 +61,7 @@ export const LevelProvider = ({ children }: PropsWithChildren) => {
   const start = () => {
     setCurrentLevel(1);
     setStartTime(Date.now());
+    setTimeOut(false);
   };
   const restart = () => setCurrentLevel(0);
   // eslint-disable-next-line react-hooks/exhaustive-deps

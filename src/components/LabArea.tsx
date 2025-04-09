@@ -1,7 +1,6 @@
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { useEffect, useMemo, useState } from "react";
 import { useLevelContext } from "../context/LevelProvider";
-import { MAX_LEVELS } from "../data/consts";
 import { LocationsSet } from "../data/types";
 import { areAllPokemonOnRightSpot } from "../utils/areAllPokemonOnRightSpot";
 import { getItemsPerSection } from "../utils/getItemsPerSection";
@@ -21,7 +20,8 @@ const getBaseLocations = () =>
   } as LocationsSet);
 
 const LabArea = () => {
-  const { pokemonList, typeBins, currentLevel, loading } = useLevelContext();
+  const { pokemonList, typeBins, currentLevel, loading, timeOut } =
+    useLevelContext();
   // state for current location of each draggable
   const [draggableLocation, setDraggableLocation] = useState<LocationsSet>(
     getBaseLocations()
@@ -69,8 +69,6 @@ const LabArea = () => {
     [draggableLocation, pokemonList]
   );
 
-  const hasNextLevel = currentLevel < MAX_LEVELS;
-
   if (currentLevel === 0) return <StartGame />;
   if (loading) return <LoadingLevel />;
 
@@ -80,9 +78,9 @@ const LabArea = () => {
         <PokemonLogoInGame />
         <CurrentLevel />
         <div className="flex justify-center items-center flex-col grow">
-          {levelCompleted && !hasNextLevel && <ChallangeCompleted />}
-          {levelCompleted && hasNextLevel && <NextLevel />}
-          {!levelCompleted && (
+          {timeOut && <ChallangeCompleted />}
+          {levelCompleted && !timeOut && <NextLevel />}
+          {!levelCompleted && !timeOut && (
             <NotSortedArea
               items={getItemsPerSection(pokemonList, draggableLocation.empty)}
             />

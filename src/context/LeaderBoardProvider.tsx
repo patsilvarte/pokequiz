@@ -11,6 +11,7 @@ import { useLevelContext } from "./LevelProvider";
 type LeaderBoardContextType = {
   saveScore: (username: string) => void;
   registWrongAttempt: () => void;
+  score: number;
 };
 
 export const LeaderBoardContext = createContext<
@@ -29,7 +30,7 @@ export const LeaderBoardProvider = ({ children }: PropsWithChildren) => {
 
   const saveScore = useCallback(
     (username: string) => {
-      const existing = JSON.parse(localStorage.getItem(storageName) || "[]");
+      const existing = JSON.parse(localStorage.getItem(storageName) ?? "[]");
       const updated = [...existing, { username, score }];
       localStorage.setItem(storageName, JSON.stringify(updated));
     },
@@ -41,8 +42,8 @@ export const LeaderBoardProvider = ({ children }: PropsWithChildren) => {
   }, [wrongAttempts]);
 
   const value: LeaderBoardContextType = useMemo(() => {
-    return { saveScore, registWrongAttempt };
-  }, [saveScore, registWrongAttempt]);
+    return { saveScore, registWrongAttempt, score };
+  }, [saveScore, registWrongAttempt, score]);
 
   return (
     <LeaderBoardContext.Provider value={value}>

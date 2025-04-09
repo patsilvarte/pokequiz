@@ -4,7 +4,7 @@ import Button from "../general/Button";
 import Card from "../general/Card";
 
 export const StartGame = () => {
-  const { next } = useLevelContext();
+  const { start } = useLevelContext();
   return (
     <div className="h-full flex justify-center items-center flex-col">
       <img
@@ -17,7 +17,7 @@ export const StartGame = () => {
         <p className="text-2xl">
           Drag and drop each Pokemon into the correspondent type
         </p>
-        <Button style={{ width: 300, marginTop: 20 }} onClick={next}>
+        <Button style={{ width: 300, marginTop: 20 }} onClick={start}>
           Start Game
         </Button>
       </Card>

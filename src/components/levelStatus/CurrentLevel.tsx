@@ -1,8 +1,9 @@
+import Countdown from "react-countdown";
 import { ReactComponent as PokeballIcon } from "../../assets/pokeball-pokemon-svgrepo-com.svg";
 import { useLevelContext } from "../../context/LevelProvider";
 
 export const CurrentLevel = () => {
-  const { currentLevel } = useLevelContext();
+  const { currentLevel, end, startTime } = useLevelContext();
 
   return (
     <div
@@ -26,6 +27,21 @@ export const CurrentLevel = () => {
       >
         {currentLevel}
       </div>
+      {startTime && (
+        <Countdown
+          date={startTime + 60000}
+          onComplete={end}
+          renderer={({ minutes, seconds, completed }) =>
+            completed ? (
+              <span>Time's up!</span>
+            ) : (
+              <span>
+                {minutes}:{seconds.toString().padStart(2, "0")}
+              </span>
+            )
+          }
+        />
+      )}
     </div>
   );
 };

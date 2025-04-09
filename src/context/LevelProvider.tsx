@@ -17,6 +17,10 @@ type LevelContextType = {
   typeBins: string[];
   restart: () => void;
   next: () => void;
+  end: () => void;
+  start: () => void;
+  timeOut: boolean;
+  startTime: number | undefined;
 };
 
 export const LevelContext = createContext<LevelContextType | undefined>(
@@ -27,6 +31,8 @@ export const LevelProvider = ({ children }: PropsWithChildren) => {
   const [currentLevel, setCurrentLevel] = useState<number>(0);
   const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
   const [loading, setLoading] = useState(false);
+  const [startTime, setStartTime] = useState<number>();
+  const [timeOut, setTimeOut] = useState(false);
 
   const fetchPokemons = async () => {
     try {
@@ -52,9 +58,14 @@ export const LevelProvider = ({ children }: PropsWithChildren) => {
     [pokemonList]
   );
 
+  const start = () => {
+    setCurrentLevel(1);
+    setStartTime(Date.now());
+  };
   const restart = () => setCurrentLevel(0);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const next = () => setCurrentLevel((prev) => prev + 1);
+  const end = () => setTimeOut(true);
 
   const value: LevelContextType = useMemo(() => {
     return {
@@ -64,8 +75,12 @@ export const LevelProvider = ({ children }: PropsWithChildren) => {
       typeBins,
       restart,
       next,
+      start,
+      end,
+      timeOut,
+      startTime,
     };
-  }, [currentLevel, loading, next, pokemonList, typeBins]);
+  }, [currentLevel, loading, pokemonList, startTime, timeOut, typeBins]);
 
   return (
     <LevelContext.Provider value={value}>{children}</LevelContext.Provider>

@@ -12,7 +12,7 @@ const ChallangeCompleted: FC = () => {
   const [submitted, setSubmitted] = useState(false);
 
   const { restart } = useLevelContext();
-  const { saveScore } = useLeaderBoardContext();
+  const { saveScore, score } = useLeaderBoardContext();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,16 +33,19 @@ const ChallangeCompleted: FC = () => {
       />
       <Card>
         <p>Great job!</p>
-        <p>All your pokemons were well classified.</p>
+        <p>You got {score} points.</p>
+
         {!showInput && (
           <>
             <Button onClick={restart}>Home</Button>
-            <Button
-              onClick={() => setShowInput(true)}
-              style={{ marginLeft: 10 }}
-            >
-              Register Play
-            </Button>
+            {!submitted && (
+              <Button
+                onClick={() => setShowInput(true)}
+                style={{ marginLeft: 10 }}
+              >
+                Register Play
+              </Button>
+            )}
           </>
         )}
         {showInput && (

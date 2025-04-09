@@ -20,12 +20,11 @@ const getBaseLocations = () =>
   } as LocationsSet);
 
 const LabArea = () => {
+  const { pokemonList, typeBins, currentLevel, loading } = useLevelContext();
   // state for current location of each draggable
   const [draggableLocation, setDraggableLocation] = useState<LocationsSet>(
     getBaseLocations()
   );
-
-  const { pokemonList, typeBins, currentLevel, loading } = useLevelContext();
 
   // add type bins for selected pokemons to location list
   useEffect(() => {
@@ -83,7 +82,6 @@ const LabArea = () => {
           {!levelCompleted && (
             <NotSortedArea
               items={getItemsPerSection(pokemonList, draggableLocation.empty)}
-              level={currentLevel}
             />
           )}
         </div>

@@ -1,3 +1,4 @@
+import shuffle from "just-shuffle";
 import { Pokemon } from "../data/types";
 
 const getRandomType = (types: string[]) =>
@@ -7,5 +8,6 @@ export const getOneTypePerPokemon = (pokemonList: Pokemon[]) => {
   const uniqueRandomTypes = Array.from(
     new Set(pokemonList.map((p) => getRandomType(p.types)))
   );
-  return uniqueRandomTypes;
+  const shuffledTypes = shuffle(uniqueRandomTypes);
+  return shuffledTypes;
 };

@@ -2,7 +2,7 @@ import axios from "axios";
 import { POKEAPI_BASE_URL } from "./consts";
 import { Pokemon } from "./types";
 
-export const getRandomPokemons = async (count = 3) => {
+export const getRandomPokemons = async (count = 4) => {
   const maxPokemon = 1025; // Total Pokémon in the PokéAPI at moment of this project
 
   const randomIds = Array.from(

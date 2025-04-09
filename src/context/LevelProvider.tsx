@@ -52,7 +52,7 @@ export const LevelProvider = ({ children }: PropsWithChildren) => {
     [pokemonList]
   );
 
-  const restart = () => setCurrentLevel(1);
+  const restart = () => setCurrentLevel(0);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const next = () => setCurrentLevel((prev) => prev + 1);
 

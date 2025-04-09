@@ -2,6 +2,7 @@ import "./App.css";
 import Footer from "./components/general/Footer";
 import { Wall } from "./components/general/Wall";
 import LabArea from "./components/LabArea";
+import { LeaderBoardProvider } from "./context/LeaderBoardProvider";
 import { LevelProvider } from "./context/LevelProvider";
 
 function App() {
@@ -10,8 +11,10 @@ function App() {
       <header className="App-header">
         <Wall>
           <LevelProvider>
-            <LabArea />
-            <Footer />
+            <LeaderBoardProvider>
+              <LabArea />
+              <Footer />
+            </LeaderBoardProvider>
           </LevelProvider>
         </Wall>
       </header>

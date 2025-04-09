@@ -11,7 +11,7 @@ interface TypeBinProps {
 
 const TypeBin: FC<TypeBinProps> = ({ type, items }) => {
   return (
-    <div className="relative w-1/3 h-96">
+    <div className="relative w-1/3 h-96" style={{ maxWidth: 250 }}>
       <img
         src={getTypeImage(type)}
         alt={`${type} bin`}

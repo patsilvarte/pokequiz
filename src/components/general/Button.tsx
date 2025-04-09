@@ -8,5 +8,6 @@ const Button = styled.button`
   border-width: 5px;
   color: #3466af;
   font-weight: 900;
+  font-size: 26px;
 `;
 export default Button;

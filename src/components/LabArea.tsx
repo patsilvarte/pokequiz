@@ -1,13 +1,14 @@
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { useEffect, useMemo, useState } from "react";
-import { LocationsSet } from "../data/types";
-import { Table } from "./general/Table";
-
 import { useLevelContext } from "../context/LevelProvider";
 import { MAX_LEVELS } from "../data/consts";
+import { LocationsSet } from "../data/types";
 import { areAllPokemonOnRightSpot } from "../utils/areAllPokemonOnRightSpot";
 import { getItemsPerSection } from "../utils/getItemsPerSection";
+import { PokemonLogoInGame } from "./general/PokemonLogoInGame";
+import { Table } from "./general/Table";
 import ChallangeCompleted from "./levelStatus/ChallangeCompleted";
+import { CurrentLevel } from "./levelStatus/CurrentLevel";
 import { LoadingLevel } from "./levelStatus/LoadingLevel";
 import NextLevel from "./levelStatus/NextLevel";
 import { StartGame } from "./levelStatus/StartGame";
@@ -76,7 +77,9 @@ const LabArea = () => {
   return (
     <DndContext onDragEnd={handleDragEnd}>
       <div className="flex justify-center grow flex-col">
-        <div className="flex justify-center flex-col grow">
+        <PokemonLogoInGame />
+        <CurrentLevel />
+        <div className="flex justify-center items-center flex-col grow">
           {levelCompleted && !hasNextLevel && <ChallangeCompleted />}
           {levelCompleted && hasNextLevel && <NextLevel />}
           {!levelCompleted && (

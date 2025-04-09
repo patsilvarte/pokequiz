@@ -31,8 +31,8 @@ const Draggable: FC<DraggableProps> = ({
 
   const styleItem = {
     borderColor:
-      transform || !insideBin ? "white" : isPlacedRight ? "green" : "red",
-    color: transform || !insideBin ? "white" : isPlacedRight ? "green" : "red",
+      transform || !insideBin ? "black" : isPlacedRight ? "green" : "red",
+    color: transform || !insideBin ? "black" : isPlacedRight ? "green" : "red",
     backgroundImage: `url(${img})`,
     backgroundSize: "contain",
     height: insideBin ? "60px" : "80px",
@@ -49,7 +49,7 @@ const Draggable: FC<DraggableProps> = ({
     >
       <div
         style={styleItem}
-        className="border-white border-2 rounded rounded-full flex justify-center items-center"
+        className="border-2 rounded rounded-full flex justify-center items-center"
       >
         {!transform &&
           insideBin &&

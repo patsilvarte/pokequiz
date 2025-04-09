@@ -22,7 +22,7 @@ type LevelContextType = {
   start: () => void;
   timeOut: boolean;
   startTime: number | undefined;
-  error: string;
+  error: string | undefined;
 };
 
 export const LevelContext = createContext<LevelContextType | undefined>(
@@ -35,7 +35,7 @@ export const LevelProvider = ({ children }: PropsWithChildren) => {
   const [loading, setLoading] = useState(false);
   const [startTime, setStartTime] = useState<number>();
   const [timeOut, setTimeOut] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string>();
 
   const fetchPokemons = async () => {
     try {
@@ -75,6 +75,7 @@ export const LevelProvider = ({ children }: PropsWithChildren) => {
     setCurrentLevel(1);
     setStartTime(Date.now());
     setTimeOut(false);
+    setError(undefined);
   };
   const restart = () => {
     setCurrentLevel(0);

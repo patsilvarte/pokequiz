@@ -8,3 +8,8 @@ export type Pokemon = {
 };
 
 export type PokemonType = "fire" | "water";
+
+export type LeaderboardEntry = {
+  username: string;
+  score: number;
+};

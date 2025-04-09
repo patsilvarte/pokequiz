@@ -6,12 +6,14 @@ import {
   useMemo,
   useState,
 } from "react";
+import { LeaderboardEntry } from "../data/types";
 import { useLevelContext } from "./LevelProvider";
 
 type LeaderBoardContextType = {
+  score: number;
   saveScore: (username: string) => void;
   registWrongAttempt: () => void;
-  score: number;
+  getLeaderboard: () => LeaderboardEntry[];
 };
 
 export const LeaderBoardContext = createContext<
@@ -28,22 +30,34 @@ export const LeaderBoardProvider = ({ children }: PropsWithChildren) => {
     return currentLevel * 3 * 50 - wrongAttempts * 3;
   }, [currentLevel, wrongAttempts]);
 
+  const getStorage = useCallback(() => {
+    const stored = localStorage.getItem(storageName);
+    const existing: LeaderboardEntry[] = stored ? JSON.parse(stored) : [];
+    return existing;
+  }, []);
+
   const saveScore = useCallback(
     (username: string) => {
-      const existing = JSON.parse(localStorage.getItem(storageName) ?? "[]");
-      const updated = [...existing, { username, score }];
+      const existing = getStorage();
+      const updated = [...existing, { username, score } as LeaderboardEntry];
       localStorage.setItem(storageName, JSON.stringify(updated));
     },
-    [score]
+    [score, getStorage]
   );
+
+  const getLeaderboard = useCallback(() => {
+    const existing = getStorage();
+    const sorted = existing.sort((a, b) => b.score - a.score);
+    return sorted;
+  }, [getStorage]);
 
   const registWrongAttempt = useCallback(() => {
     setWrongAttempts(wrongAttempts + 1);
   }, [wrongAttempts]);
 
   const value: LeaderBoardContextType = useMemo(() => {
-    return { saveScore, registWrongAttempt, score };
-  }, [saveScore, registWrongAttempt, score]);
+    return { saveScore, registWrongAttempt, score, getLeaderboard };
+  }, [saveScore, registWrongAttempt, score, getLeaderboard]);
 
   return (
     <LeaderBoardContext.Provider value={value}>

@@ -8,5 +8,6 @@ const Card = styled.div`
   color: white;
   z-index: 2;
   width: fit-content;
+  min-width: 300px;
 `;
 export default Card;

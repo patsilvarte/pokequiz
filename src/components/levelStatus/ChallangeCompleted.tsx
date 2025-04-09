@@ -33,20 +33,12 @@ const ChallangeCompleted: FC = () => {
       />
       <Card>
         <p>Great job!</p>
-        <p>You got {score} points.</p>
-
-        {!showInput && (
-          <>
-            <Button onClick={restart}>Home</Button>
-            {!submitted && (
-              <Button
-                onClick={() => setShowInput(true)}
-                style={{ marginLeft: 10 }}
-              >
-                Register Play
-              </Button>
-            )}
-          </>
+        <p className="mb-5">You got {score} points.</p>
+        {!showInput && <Button onClick={restart}>Home</Button>}
+        {!showInput && !submitted && (
+          <Button onClick={() => setShowInput(true)} className=" ml-5">
+            Register Play
+          </Button>
         )}
         {showInput && (
           <form

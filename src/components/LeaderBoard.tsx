@@ -11,7 +11,7 @@ export const LeaderBoard = ({ close }: LeaderBoardProps) => {
   const entries = getLeaderboard();
 
   return (
-    <div className="max-w-md mx-auto w-[80vw] max-h-[80vh] flex flex-col">
+    <div className="max-w-md mx-auto w-[80vw] max-h-[70vh] flex flex-col">
       <h2 className="text-3xl font-bold mb-8 text-center">🏆 Leaderboard</h2>
       {entries.length === 0 ? (
         <p className="text-center text-xl">No entries yet.</p>

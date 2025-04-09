@@ -13,35 +13,33 @@ export const StartGame = () => {
   return (
     <div className="h-full flex justify-center items-center flex-col">
       {checkLeaderboard ? (
-        <PokemonLogoInGame />
+        <>
+          <PokemonLogoInGame />
+          <Card>
+            <LeaderBoard close={() => setCheckLeaderboard(false)} />
+          </Card>
+        </>
       ) : (
-        <img
-          src={pokemonLogo}
-          alt="pokemon logo"
-          style={{ width: 370, position: "absolute", top: 0 }}
-        />
-      )}
-      <Card>
-        {checkLeaderboard ? (
-          <LeaderBoard close={() => setCheckLeaderboard(false)} />
-        ) : (
-          <>
+        <>
+          <img
+            src={pokemonLogo}
+            alt="pokemon logo"
+            style={{ width: 370, position: "absolute", top: 0 }}
+          />
+          <Card>
             <p className="text-4xl">Do you know your Pokemons?</p>
             <p className="text-2xl">
               Drag and drop each Pokemon into the correspondent type
             </p>
-            <Button style={{ width: 300, marginTop: 20 }} onClick={start}>
+            <Button className="mt-5" onClick={start}>
               Start Game
             </Button>
-            <Button
-              style={{ marginLeft: 20 }}
-              onClick={() => setCheckLeaderboard(true)}
-            >
+            <Button className="ml-5" onClick={() => setCheckLeaderboard(true)}>
               Check LeaderBoard
             </Button>
-          </>
-        )}
-      </Card>
+          </Card>
+        </>
+      )}
     </div>
   );
 };

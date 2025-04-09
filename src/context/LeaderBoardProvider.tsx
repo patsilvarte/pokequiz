@@ -4,11 +4,13 @@ import {
   useCallback,
   useContext,
   useMemo,
+  useState,
 } from "react";
 import { useLevelContext } from "./LevelProvider";
 
 type LeaderBoardContextType = {
   saveScore: (username: string) => void;
+  registWrongAttempt: () => void;
 };
 
 export const LeaderBoardContext = createContext<
@@ -17,11 +19,13 @@ export const LeaderBoardContext = createContext<
 
 export const LeaderBoardProvider = ({ children }: PropsWithChildren) => {
   const storageName = "pokequiz-leaderboard";
+  const [wrongAttempts, setWrongAttempts] = useState<number>(0);
   const { currentLevel } = useLevelContext();
 
   const score = useMemo(() => {
-    return currentLevel * 3 * 50;
-  }, [currentLevel]);
+    if (currentLevel === 1) return 0;
+    return currentLevel * 3 * 50 - wrongAttempts * 3;
+  }, [currentLevel, wrongAttempts]);
 
   const saveScore = useCallback(
     (username: string) => {
@@ -32,9 +36,13 @@ export const LeaderBoardProvider = ({ children }: PropsWithChildren) => {
     [score]
   );
 
+  const registWrongAttempt = useCallback(() => {
+    setWrongAttempts(wrongAttempts + 1);
+  }, [wrongAttempts]);
+
   const value: LeaderBoardContextType = useMemo(() => {
-    return { saveScore };
-  }, [saveScore]);
+    return { saveScore, registWrongAttempt };
+  }, [saveScore, registWrongAttempt]);
 
   return (
     <LeaderBoardContext.Provider value={value}>

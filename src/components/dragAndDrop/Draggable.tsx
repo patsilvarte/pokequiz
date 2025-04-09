@@ -1,8 +1,9 @@
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useEffect } from "react";
 import itemRight from "../../assets/item_right.png";
 import itemWrong from "../../assets/item_wrong.png";
+import { useLeaderBoardContext } from "../../context/LeaderBoardProvider";
 
 interface DraggableProps {
   children?: ReactNode;
@@ -19,6 +20,7 @@ const Draggable: FC<DraggableProps> = ({
   insideBin = false,
   img,
 }) => {
+  const { registWrongAttempt } = useLeaderBoardContext();
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: id,
   });
@@ -38,6 +40,13 @@ const Draggable: FC<DraggableProps> = ({
     height: insideBin ? "60px" : "80px",
     width: insideBin ? "60px" : "80px",
   };
+
+  useEffect(() => {
+    if (isPlacedRight === false) {
+      registWrongAttempt();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPlacedRight]);
 
   return (
     <button

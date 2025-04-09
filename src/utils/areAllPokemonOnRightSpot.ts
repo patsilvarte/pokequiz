@@ -4,7 +4,7 @@ export const areAllPokemonOnRightSpot = (
   locations: LocationsSet,
   pokemons: Pokemon[]
 ) => {
-  if (locations.empty.length !== 0) {
+  if (locations.empty.length !== 0 || pokemons.length === 0) {
     return false;
   }
   return pokemons.every((pokemon) => {

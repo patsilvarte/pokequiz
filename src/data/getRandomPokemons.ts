@@ -1,29 +1,63 @@
 import axios from "axios";
-import { POKEAPI_BASE_URL } from "./consts";
+import { POKEAPI_BASE_URL, POKEMONS_PER_LEVEL } from "./consts";
 import { Pokemon } from "./types";
 
-export const getRandomPokemons = async (count = 4) => {
-  const maxPokemon = 1025; // Total Pokémon in the PokéAPI at moment of this project
+const maxPokemon = 1025;
+const maxAttempts = 10; // total fetch attempts before giving up
 
-  const randomIds = Array.from(
-    { length: count },
-    () => Math.floor(Math.random() * maxPokemon) + 1
-  );
+const fetchPokemon = async (id: number): Promise<Pokemon | null> => {
+  try {
+    const res = await axios.get(`${POKEAPI_BASE_URL}/pokemon/${id}`);
+    return {
+      name: res.data.name,
+      image: res.data.sprites.front_default,
+      id: res.data.id,
+      types: res.data.types.map(
+        ({ type }: { type: { name: string } }) => type.name
+      ),
+    };
+  } catch {
+    return null;
+  }
+};
 
-  const requests = randomIds.map((id) =>
-    axios.get(`${POKEAPI_BASE_URL}/pokemon/${id}`)
-  );
+const getRandomId = () => Math.floor(Math.random() * maxPokemon) + 1;
 
-  const responses = await Promise.all(requests);
-  return responses.map(
-    (res) =>
-      ({
-        name: res.data.name,
-        image: res.data.sprites.front_default,
-        id: res.data.id,
-        types: res.data.types.map(
-          ({ type }: { type: { name: string } }) => type.name
-        ),
-      } as Pokemon)
-  );
+export const getRandomPokemons = async (): Promise<Pokemon[]> => {
+  const results: Pokemon[] = [];
+  const usedIds = new Set<number>();
+  let attempt = 0;
+
+  while (results.length < POKEMONS_PER_LEVEL && attempt < maxAttempts) {
+    const needed = POKEMONS_PER_LEVEL - results.length;
+    const ids: number[] = [];
+    attempt++;
+
+    // Generate unique IDs
+    while (ids.length < needed) {
+      const id = getRandomId();
+      if (!usedIds.has(id)) {
+        ids.push(id);
+        usedIds.add(id);
+      }
+    }
+
+    // Fetch in parallel
+    const batch = await Promise.allSettled(ids.map(fetchPokemon));
+
+    // Collect only fulfilled + non-null
+    batch.forEach((result) => {
+      if (result.status === "fulfilled" && result.value) {
+        results.push(result.value);
+      }
+    });
+  }
+
+  if (results.length < POKEMONS_PER_LEVEL) {
+    console.warn(
+      `Only got ${results.length} Pokémon after ${maxAttempts} attempts.`
+    );
+  }
+
+  return results;
 };

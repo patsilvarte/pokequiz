@@ -7,7 +7,7 @@ import { PokemonLogoInGame } from "../general/PokemonLogoInGame";
 import { LeaderBoard } from "../LeaderBoard";
 
 export const StartGame = () => {
-  const { start } = useLevelContext();
+  const { start, error } = useLevelContext();
   const [checkLeaderboard, setCheckLeaderboard] = useState<boolean>(false);
 
   return (
@@ -38,6 +38,7 @@ export const StartGame = () => {
               Check LeaderBoard
             </Button>
           </Card>
+          <p>{error}</p>
         </>
       )}
     </div>

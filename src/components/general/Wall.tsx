@@ -1,5 +1,4 @@
 import { FC } from "react";
-import labShelf from "../../assets/shelf.png";
 import wallBackground from "../../assets/wall.jpg";
 import { Background } from "./Background";
 
@@ -13,12 +12,12 @@ export const Wall: FC<SkyProps> = ({ children }) => {
       className="flex w-screen h-screen flex-col"
       style={{ backgroundImage: `url(${wallBackground})` }}
     >
-      <img
+      {/* <img
         src={labShelf}
         alt={"lab shelf"}
         style={{ width: 300, left: 30, top: 30 }}
         className="absolute object-contain"
-      />
+      /> */}
       {children}
     </Background>
   );

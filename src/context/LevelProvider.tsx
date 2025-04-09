@@ -11,7 +11,7 @@ import { Pokemon } from "../data/types";
 import { getOneTypePerPokemon } from "../utils/getOneTypePerPokemon";
 
 type LevelContextType = {
-  levelsCompleted: number;
+  currentLevel: number;
   pokemonList: Pokemon[];
   loading: boolean;
   typeBins: string[];
@@ -24,46 +24,48 @@ export const LevelContext = createContext<LevelContextType | undefined>(
 );
 
 export const LevelProvider = ({ children }: PropsWithChildren) => {
-  const [levelsCompleted, setLevelsCompleted] = useState<number>(0);
+  const [currentLevel, setCurrentLevel] = useState<number>(0);
   const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const fetchPokemons = async () => {
+    try {
+      setLoading(true);
+      const data = await getRandomPokemons();
+      setPokemonList(data);
+      setLoading(false);
+    } catch (err) {
+      console.error("Failed to fetch Pokémon:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    console.log("levels comleted :", levelsCompleted);
-    const fetchPokemons = async () => {
-      try {
-        const data = await getRandomPokemons();
-        console.log(data);
-        setPokemonList(data);
-      } catch (err) {
-        console.error("Failed to fetch Pokémon:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPokemons();
-  }, [levelsCompleted]);
+    if (currentLevel !== 0) {
+      fetchPokemons();
+    }
+  }, [currentLevel]);
 
   const typeBins = useMemo(
     () => getOneTypePerPokemon(pokemonList),
     [pokemonList]
   );
 
-  const restart = () => setLevelsCompleted(0);
+  const restart = () => setCurrentLevel(1);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const next = () => setLevelsCompleted((prev) => prev + 1);
+  const next = () => setCurrentLevel((prev) => prev + 1);
 
   const value: LevelContextType = useMemo(() => {
     return {
-      levelsCompleted,
+      currentLevel,
       pokemonList,
       loading,
       typeBins,
       restart,
       next,
     };
-  }, [levelsCompleted, loading, next, pokemonList, typeBins]);
+  }, [currentLevel, loading, next, pokemonList, typeBins]);
 
   return (
     <LevelContext.Provider value={value}>{children}</LevelContext.Provider>

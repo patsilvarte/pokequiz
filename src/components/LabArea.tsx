@@ -8,7 +8,9 @@ import { MAX_LEVELS } from "../data/consts";
 import { areAllPokemonOnRightSpot } from "../utils/areAllPokemonOnRightSpot";
 import { getItemsPerSection } from "../utils/getItemsPerSection";
 import ChallangeCompleted from "./levelStatus/ChallangeCompleted";
+import { LoadingLevel } from "./levelStatus/LoadingLevel";
 import NextLevel from "./levelStatus/NextLevel";
+import { StartGame } from "./levelStatus/StartGame";
 import NotSortedArea from "./NotSortedArea";
 import TypeBin from "./TypeBin";
 
@@ -23,8 +25,7 @@ const LabArea = () => {
     getBaseLocations()
   );
 
-  const { pokemonList, typeBins, next, restart, levelsCompleted } =
-    useLevelContext();
+  const { pokemonList, typeBins, currentLevel, loading } = useLevelContext();
 
   // add type bins for selected pokemons to location list
   useEffect(() => {
@@ -68,20 +69,21 @@ const LabArea = () => {
     [draggableLocation, pokemonList]
   );
 
-  const hasNextLevel = levelsCompleted + 1 < MAX_LEVELS;
+  const hasNextLevel = currentLevel < MAX_LEVELS;
+
+  if (currentLevel === 0) return <StartGame />;
+  if (loading) return <LoadingLevel />;
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
-      <div className="flex grow flex-col">
+      <div className="flex justify-center grow flex-col">
         <div className="flex justify-center flex-col grow">
-          {levelCompleted && !hasNextLevel && (
-            <ChallangeCompleted restart={restart} />
-          )}
-          {levelCompleted && hasNextLevel && <NextLevel next={next} />}
+          {levelCompleted && !hasNextLevel && <ChallangeCompleted />}
+          {levelCompleted && hasNextLevel && <NextLevel />}
           {!levelCompleted && (
             <NotSortedArea
               items={getItemsPerSection(pokemonList, draggableLocation.empty)}
-              level={levelsCompleted + 1}
+              level={currentLevel}
             />
           )}
         </div>

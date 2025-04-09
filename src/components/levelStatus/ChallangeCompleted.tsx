@@ -1,12 +1,12 @@
 import { FC } from "react";
 import Confetti from "react-confetti";
+import { useLevelContext } from "../../context/LevelProvider";
 import { getStarConfettis } from "../../utils/confettisEffects";
 import Button from "../general/Button";
-interface ChallangeCompletedProps {
-  restart: () => void;
-}
 
-const ChallangeCompleted: FC<ChallangeCompletedProps> = ({ restart }) => {
+const ChallangeCompleted: FC = () => {
+  const { restart } = useLevelContext();
+
   return (
     <div>
       <Confetti

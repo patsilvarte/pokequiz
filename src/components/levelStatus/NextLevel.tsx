@@ -1,12 +1,11 @@
 import { FC } from "react";
 import Confetti from "react-confetti";
+import { useLevelContext } from "../../context/LevelProvider";
 import Button from "../general/Button";
 
-interface NextLevelProps {
-  next: () => void;
-}
+const NextLevel: FC = () => {
+  const { next } = useLevelContext();
 
-const NextLevel: FC<NextLevelProps> = ({ next }) => {
   return (
     <div>
       <Confetti width={window.innerWidth} height={window.innerHeight} />

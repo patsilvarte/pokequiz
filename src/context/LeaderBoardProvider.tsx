@@ -23,7 +23,7 @@ export const LeaderBoardContext = createContext<
 export const LeaderBoardProvider = ({ children }: PropsWithChildren) => {
   const storageName = "pokequiz-leaderboard";
   const [wrongAttempts, setWrongAttempts] = useState<number>(0);
-  const { currentLevel } = useLevelContext();
+  const { currentLevel, timeOut } = useLevelContext();
 
   const score = useMemo(() => {
     if (currentLevel === 1) return 0;
@@ -52,8 +52,9 @@ export const LeaderBoardProvider = ({ children }: PropsWithChildren) => {
   }, [getStorage]);
 
   const registWrongAttempt = useCallback(() => {
+    if (timeOut) return;
     setWrongAttempts(wrongAttempts + 1);
-  }, [wrongAttempts]);
+  }, [wrongAttempts, timeOut]);
 
   const value: LeaderBoardContextType = useMemo(() => {
     return { saveScore, registWrongAttempt, score, getLeaderboard };

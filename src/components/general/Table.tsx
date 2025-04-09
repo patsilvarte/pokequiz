@@ -9,9 +9,9 @@ interface StreetProps {
 
 export const Table: FC<StreetProps> = ({ children }) => {
   return (
-    <div className="flex justify-center w-screen relative">
+    <div className="flex justify-center w-screen h-1/2 relative">
       <Background
-        className="absolute bottom-0 h-1/3 w-full "
+        className="absolute bottom-0 h-2/5 w-full "
         style={{ backgroundImage: `url(${table})` }}
       />
 

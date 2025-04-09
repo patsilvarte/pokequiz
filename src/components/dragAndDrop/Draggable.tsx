@@ -20,9 +20,10 @@ const Draggable: FC<DraggableProps> = ({
   insideBin = false,
   img,
 }) => {
-  const { registWrongAttempt } = useLeaderBoardContext();
+  const { registWrongAttempt, registRightAnswer } = useLeaderBoardContext();
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: id,
+    disabled: isPlacedRight,
   });
   const styleButton = transform
     ? { transform: CSS.Translate.toString(transform), zIndex: 3 }
@@ -44,6 +45,8 @@ const Draggable: FC<DraggableProps> = ({
   useEffect(() => {
     if (isPlacedRight === false) {
       registWrongAttempt();
+    } else if (isPlacedRight) {
+      registRightAnswer();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPlacedRight]);

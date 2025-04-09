@@ -3,6 +3,7 @@ import {
   PropsWithChildren,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -13,6 +14,7 @@ type LeaderBoardContextType = {
   score: number;
   saveScore: (username: string) => void;
   registWrongAttempt: () => void;
+  registRightAnswer: () => void;
   getLeaderboard: () => LeaderboardEntry[];
 };
 
@@ -23,12 +25,13 @@ export const LeaderBoardContext = createContext<
 export const LeaderBoardProvider = ({ children }: PropsWithChildren) => {
   const storageName = "pokequiz-leaderboard";
   const [wrongAttempts, setWrongAttempts] = useState<number>(0);
-  const { currentLevel, timeOut } = useLevelContext();
+  const [rightAnswers, setRightAnswers] = useState<number>(0);
+  const { timeOut, startTime } = useLevelContext();
 
   const score = useMemo(() => {
-    if (currentLevel === 1) return 0;
-    return currentLevel * 3 * 50 - wrongAttempts * 3;
-  }, [currentLevel, wrongAttempts]);
+    const result = rightAnswers * 50 - wrongAttempts * 3;
+    return result < 0 ? 0 : result;
+  }, [rightAnswers, wrongAttempts]);
 
   const getStorage = useCallback(() => {
     const stored = localStorage.getItem(storageName);
@@ -56,9 +59,28 @@ export const LeaderBoardProvider = ({ children }: PropsWithChildren) => {
     setWrongAttempts(wrongAttempts + 1);
   }, [wrongAttempts, timeOut]);
 
+  const registRightAnswer = useCallback(() => {
+    if (timeOut) return;
+    setRightAnswers(rightAnswers + 1);
+  }, [rightAnswers, timeOut]);
+
+  useEffect(() => {
+    // reset attampts when game starts
+    if (startTime) {
+      setWrongAttempts(0);
+      setRightAnswers(0);
+    }
+  }, [startTime]);
+
   const value: LeaderBoardContextType = useMemo(() => {
-    return { saveScore, registWrongAttempt, score, getLeaderboard };
-  }, [saveScore, registWrongAttempt, score, getLeaderboard]);
+    return {
+      saveScore,
+      registWrongAttempt,
+      score,
+      getLeaderboard,
+      registRightAnswer,
+    };
+  }, [saveScore, registWrongAttempt, score, getLeaderboard, registRightAnswer]);
 
   return (
     <LeaderBoardContext.Provider value={value}>
